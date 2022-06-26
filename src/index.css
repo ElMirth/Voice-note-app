@@ -5,9 +5,442 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: hsl(210, 12%, 95%);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+button{
+  cursor: pointer;
+}
+
+/* Add note  style*/
+.addNote{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+  z-index: 100;
+  height: 100%;
+}
+
+.addNote input{
+  height: 40px;
+  border: unset;
+  font-size: 22px;
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
+  border-bottom: 1.5px solid hsl(210, 10%, 75%);
+  padding-left: 5px;
+}
+
+.addNote input:focus{
+  outline: none;
+}
+
+.addNote button {
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: hsl(210, 12%, 15%);
+}
+
+.addNote textarea {
+  height: 150px;
+  flex: 1;
+  padding: 5px;
+  border: none;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.addNote textarea:focus { 
+  outline: none;
+}
+
+.addNote button:hover {
+  background-color: hsl(210, 12%, 25%);
+}
+
+.addNote button:active {
+  background-color: hsl(210, 12%, 15%);
+}
+
+/* Modal style */
+.modalContainer {
+  position: fixed;
+  width: 100vw; 
+  height: 100%;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modal{
+  width: 90%;
+  max-width: 500px;
+  border: 5px;
+  padding: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  box-sizing: border-box;
+  border-radius: 4px;
+  height: 90vh;
+  max-height: 600px;
+}
+
+.modal__head{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.modal__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 24px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.modal__close:hover{
+  color: hsl(0, 70%, 70%);
+}
+
+/* Note style */
+.note{
+  width: 100%;
+  padding: 15px 20px;
+  background-color: white;
+  margin: 0 auto;
+  flex-shrink: 0;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 0 6px gainsboro;
+  cursor: pointer;
+}
+
+.note__date {
+  color: gray;
+  text-align: left;
+  width: 100%;
+}
+
+.note--borderColor{
+  border-color: green;
+  box-shadow: 0 6px 18px -9px hsl(210, 15%, 65%);
+}
+
+.note__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.note__body h2{
+  font-weight: 550;
+  font-size: 18px;
+  color: hsl(210, 12%, 15%);
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note__body p{
+  margin: 10px 0 0 0;
+  overflow: hidden;
+  display: -webkit-box;
+  line-height: 25px;
+  color: hsl(210, 20%, 25%);
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical; 
+}
+
+.note__deleteButton{
+  border: none;
+  background: white;
+  color: #ff000082;
+  margin-left: auto;
+}
+
+
+/* Notes style */
+.notes{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.notes__container {
+  width: 95%;
+  margin: 50px auto 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1100px;
+}
+
+.notes__head{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.notes__searchForm{
+  border: 1px solid #b9b0b0;
+  border-radius: 4px;
+  max-width: 300px;
+  height: 30px;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.notes__searchForm img{
+  height: 20px;
+  width: 20px;
+  border: none;
+  padding-right: 5px;
+  color: white;
+}
+
+.notes__searchForm button:hover{
+  background-color: black;
+}
+
+.notes__searchForm button:active{
+  background-color: rgb(53, 52, 52);
+}
+
+.notes__searchForm input{
+  background-color: transparent;
+  border: none;
+  padding-left: 10px;
+  flex: 1;
+  padding-right: 10px;
+  color: rgb(53, 52, 52);
+  height: inherit;
+}
+
+.notes__searchForm input:focus {
+  outline: none;
+  border: none;
+}
+
+.notes__head > button {
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 10px 15px;
+  background-color: transparent;
+  color: gray;
+  cursor: pointer;
+}
+
+.notes__head > button > i{
+  padding: 1px 6px;
+  border-radius: 50%;
+  background: gray;
+  color: white;
+}
+
+.notes__head > button:hover{
+  color: hsl(210, 12%, 25%);
+}
+
+.notes__head > button:hover i{
+  background-color: hsl(210, 12%, 25%);
+}
+
+.notes__head > button:active{
+  color: hsl(210, 12%, 15%);
+}
+
+.notes__note{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.notes__note .note{
+  margin: 0  auto;
+}
+
+@media(min-width: 600px){
+  .notes__note .note{
+    margin: unset;  
+  }
+
+  .notes__note{
+    flex-direction: row;
+  }
+
+  .notes__searchForm{
+    margin: unset;
+  }
+
+  .notes__head {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+    
+}
+
+/* View note style */
+.viewNote{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.viewNote input{
+  font-weight: 400;
+  text-transform: uppercase;
+  border: none;
+  border-bottom: 1PX solid gray;
+  font-size: 18px;
+  padding: 5px;
+  padding-left: none;
+}
+
+.viewNote input:focus{
+  outline: none;
+}
+
+.viewNote textarea{
+  border: none;
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 25px;
+  overflow-y: auto;
+  color: hsl(210, 20%, 25%);
+  flex: 1;
+}
+
+.viewNote textarea:focus{
+  outline: none;
+}
+
+.viewNote__editNDelete{
+  width: 100%;
+  text-align: left;
+}
+
+.viewNote__editNDelete span{
+  cursor: pointer;
+  color: gray;
+}
+
+.viewNote__editNDelete span:hover{
+  color: black;
+}
+
+/* Speak */
+.speak {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  margin-left: auto;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10px 10px 0;
+}
+
+.speak__OptionsView{
+  background-color: white;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  border-top-left-radius: 50px;
+}
+
+.speak > img {
+  background: gray;
+  border-radius: 100%;
+  z-index: 1;
+  padding: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.listening img{ 
+  background-color: rgb(24, 129, 228);
+}
+
+.options{
+  display: flex;
+  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Speak option */
+.speakOption{
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid gainsboro;
+  padding-bottom: 10px;
+}
+
+.speakOption__icon {
+  width: 20px;
+  height: 20px;
+  font-size: 24px;
+  text-align: center;
+  color: rgb(145, 142, 142);
+}
+
+.speakOption__icon img{
+  width: 100%;
+}
+
+.speakOption__text{
+  font-size: 14px;
+  color: rgb(59, 55, 55);
+  width: 40px;
+  text-align: center;
+}
+
+@media(min-width: 640px){
+  .speak{
+    right: 40px;
+    bottom: 40px;
+  }
 }
