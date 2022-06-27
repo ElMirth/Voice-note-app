@@ -3,6 +3,7 @@ import AddNote from './AddNote'
 import {useEffect, useState} from 'react'
 import Speak from './Speak'
 import SpeakOption from './SpeakOption'
+import { useSpeechRecognition } from 'react-speech-kit';
 
 function Notes() {
 
@@ -14,6 +15,40 @@ function Notes() {
   const [searchValue, setSearchValue] = useState('')
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
+  const [current, setCurrent] = useState('')
+
+  const getStateSetter = (result) => {
+    switch(current) {
+      case 'search':
+        setSearchValue(result)
+        break;
+      case 'title':
+        setTitle(result.toUpperCase())
+        break;
+      case 'body':
+        setBody((prev) => prev + ' ' + result)
+        break;
+      default:
+      return null
+    }
+  }
+
+  const { listen, listening, stop, supported } = useSpeechRecognition({
+    onResult: (result) => {
+      getStateSetter(result)
+    }
+  })
+
+  useEffect(() => {
+    if(current !== ''){
+      if(!supported) alert('Speech recognition is not supported')
+      if(current === 'body'){
+        listen({interimResults: false})
+      }else{
+        listen()
+      }
+    }
+  }, [current, listen, supported])
 
   const addNote = (e, title, body) => {
     e.preventDefault()
@@ -114,28 +149,29 @@ function Notes() {
           body={body}
         />
       }
-
-      <Speak 
+      
+      <Speak
         open={speakOptionOpen} 
         toogleViewOptions={() => setSpeakOptionOpen(!speakOptionOpen)}
-        
+        listening={listening}
+        stopListening={() => {setCurrent(''); stop()}}
       >
       {!openAddModal
         ?  <SpeakOption 
             icon={<img src='/search-i.png' alt='search'/>}
             text='Search'
-            onClick={() => {setSpeakOptionOpen(!speakOptionOpen)}}
+            onClick={() => {setCurrent('search'); setSpeakOptionOpen(!speakOptionOpen)}}
           />
         : <>
-            <SpeakOption 
+            <SpeakOption
               icon='+'
               text='Title'
-              onClick={() => {setSpeakOptionOpen(!speakOptionOpen)}}
+              onClick={() => {setCurrent('title'); setSpeakOptionOpen(!speakOptionOpen)}}
             />
             <SpeakOption 
               icon='+'
               text='Body'
-              onClick={() => {setSpeakOptionOpen(!speakOptionOpen)}}
+              onClick={() => {setCurrent('body'); setSpeakOptionOpen(!speakOptionOpen)}}
             />
           </>
         }
